@@ -1,0 +1,15 @@
+services:
+  frontend:
+    restart: unless-stopped
+    build: .
+    labels:
+      - 'traefik.http.routers.mist-radio.rule=Host(`mist-radio.lipsumar.io`)'
+      - 'traefik.http.routers.mist-radio.tls.certresolver=le'
+      - 'traefik.http.routers.mist-radio.entrypoints=websecure'
+      - 'traefik.docker.network=traefik-external'
+    networks:
+      - traefik-external
+
+networks:
+  traefik-external:
+    external: true
