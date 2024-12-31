@@ -6,6 +6,12 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY index.html ./
+COPY nginx.conf ./
+COPY tsconfig.json ./
+COPY tsconfig.app.json ./
+COPY tsconfig.node.json ./
+COPY env.d.ts ./
+COPY vite.config.ts ./
 COPY src ./src
 COPY public ./public
 
