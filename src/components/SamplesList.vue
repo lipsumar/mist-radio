@@ -5,6 +5,7 @@ import IconSplit from "./icons/IconSplit.vue";
 import { detectAudioSegments } from "@/lib/detectAudioSegments";
 import SampleRegions from "./SampleRegions.vue";
 import { playSample } from "@/lib/play";
+import SoundContainer from "./SoundContainer.vue";
 
 const samples = useSamplesStore();
 
@@ -17,7 +18,7 @@ async function splitSample(sample: Sample) {
   <div class="samples-list">
     <div v-for="sample in samples.samples" :key="sample.id">
       <div class="samples-list__sample">
-        <AudioWaveform
+        <!-- <AudioWaveform
           :sample="sample"
           :height="50"
           @click="() => playSample(sample.blob)"
@@ -26,7 +27,20 @@ async function splitSample(sample: Sample) {
           <div class="tools__tool" @click="() => splitSample(sample)">
             <IconSplit width="30" />
           </div>
-        </div>
+        </div> -->
+        <SoundContainer :duration="sample.duration">
+          <AudioWaveform
+            :sample="sample"
+            :height="50"
+            @click="() => playSample(sample.blob)"
+          />
+
+          <template #tools>
+            <div class="tools__tool" @click="() => splitSample(sample)">
+              <IconSplit width="30" />
+            </div>
+          </template>
+        </SoundContainer>
       </div>
       <SampleRegions :sample="sample" />
     </div>
@@ -42,23 +56,5 @@ async function splitSample(sample: Sample) {
 
 .samples-list__sample {
   margin-bottom: 10px;
-
-  background-color: #303030;
-  border-radius: 3px;
-  border: 1px solid #4c4c4c;
-  display: flex;
-}
-
-.tools {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.tools__tool {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  border-left: 1px solid #4c4c4c;
 }
 </style>
