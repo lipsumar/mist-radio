@@ -4,6 +4,7 @@ import EmptyState from "@/components/EmptyState.vue";
 import MainSection from "@/components/MainSection.vue";
 import SamplesList from "@/components/SamplesList.vue";
 import AudioRecorder from "@/lib/AudioRecorder";
+import { playSample } from "@/lib/play";
 import { useSamplesStore } from "@/stores/samples";
 import { ref } from "vue";
 
@@ -22,6 +23,17 @@ function recordButtonClicked() {
     samples.addSample(blob);
   }
 }
+function onChange(e: Event) {
+  const target = e.target as HTMLInputElement;
+  const file = target.files?.[0];
+  if (file) {
+    playFile(file);
+  }
+}
+function playFile(file: File) {
+  const blob = new Blob([file], { type: file.type });
+  playSample(blob);
+}
 </script>
 
 <template>
@@ -38,5 +50,6 @@ function recordButtonClicked() {
       :class="{ active: recording }"
       @click="() => recordButtonClicked()"
     ></button>
+    <input type="file" @change="(e) => onChange(e)" accept="audio/*" />
   </BottomBar>
 </template>
