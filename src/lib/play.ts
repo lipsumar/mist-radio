@@ -32,7 +32,7 @@ export async function playSample(
 
     // Start playback
     if (end !== null) {
-      source.start(0, start, end);
+      source.start(0, start, end - start);
     } else {
       source.start(0);
     }
