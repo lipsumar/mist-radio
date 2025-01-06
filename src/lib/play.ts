@@ -1,4 +1,8 @@
-export async function playSample(blob: Blob): Promise<void> {
+export async function playSample(
+  blob: Blob,
+  start: number = 0,
+  end: number | null = null
+): Promise<void> {
   // Create audio context
   const AudioContext =
     window.AudioContext || (window as any).webkitAudioContext;
@@ -27,7 +31,12 @@ export async function playSample(blob: Blob): Promise<void> {
     console.log("source", source);
 
     // Start playback
-    source.start(0);
+    if (end !== null) {
+      source.start(0, start, end);
+    } else {
+      source.start(0);
+    }
+
     console.log("source started");
 
     // Clean up when done
@@ -43,11 +52,5 @@ export async function playSample(blob: Blob): Promise<void> {
 }
 
 export function playRegion(blob: Blob, start: number, end: number) {
-  const audioURL = URL.createObjectURL(blob);
-  const audio = new Audio(audioURL);
-  audio.currentTime = start;
-  audio.play();
-  setTimeout(() => {
-    audio.pause();
-  }, (end - start) * 1000);
+  playSample(blob, start, end);
 }
