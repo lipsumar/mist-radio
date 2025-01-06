@@ -71,33 +71,4 @@ import { RouterLink } from "vue-router";
   align-items: center;
   cursor: pointer;
 }
-.round-button--record {
-  background-color: #ff3b30;
-}
-.round-button--record::before {
-  content: "";
-  display: block;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #fff;
-  line-height: 0;
-}
-
-/* Add the pulsing animation when recording is active */
-.round-button--record.active {
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 15px rgba(255, 59, 48, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
-  }
-}
 </style>

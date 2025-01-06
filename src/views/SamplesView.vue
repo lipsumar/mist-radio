@@ -7,6 +7,7 @@ import AudioRecorder from "@/lib/AudioRecorder";
 import { playSample } from "@/lib/play";
 import { useSamplesStore } from "@/stores/samples";
 import { ref } from "vue";
+import IconUpload from "@/components/icons/IconUpload.vue";
 
 const samples = useSamplesStore();
 const recorder = new AudioRecorder();
@@ -32,7 +33,7 @@ function onChange(e: Event) {
 }
 function playFile(file: File) {
   const blob = new Blob([file], { type: file.type });
-  playSample(blob);
+  samples.addSample(blob);
 }
 </script>
 
@@ -40,7 +41,7 @@ function playFile(file: File) {
   <MainSection>
     <EmptyState
       v-if="samples.length === 0"
-      message="Press record to create samples"
+      message="Press record or upload samples"
     />
     <SamplesList v-else />
   </MainSection>
@@ -50,6 +51,67 @@ function playFile(file: File) {
       :class="{ active: recording }"
       @click="() => recordButtonClicked()"
     ></button>
-    <input type="file" @change="(e) => onChange(e)" />
+    <div class="round-button round-button--upload">
+      <div class="inner">
+        <IconUpload width="35" />
+      </div>
+      <input type="file" class="" @change="(e) => onChange(e)" />
+    </div>
   </BottomBar>
 </template>
+
+<style>
+.round-button--record::before {
+  content: "";
+  display: block;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #ff3b30;
+  line-height: 0;
+}
+
+/* Add the pulsing animation when recording is active */
+.round-button--record.active {
+  animation: pulse 1.5s infinite;
+  background-color: #ff3b30;
+}
+.round-button--record.active::before {
+  background-color: #fff;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(255, 59, 48, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+  }
+}
+
+.round-button--upload {
+  position: relative;
+}
+.round-button--upload .inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.round-button--upload .inner svg {
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.round-button--upload input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+</style>
