@@ -50,6 +50,6 @@ function playFile(file: File) {
       :class="{ active: recording }"
       @click="() => recordButtonClicked()"
     ></button>
-    <input type="file" @change="(e) => onChange(e)" accept="audio/*" />
+    <input type="file" @change="(e) => onChange(e)" />
   </BottomBar>
 </template>
