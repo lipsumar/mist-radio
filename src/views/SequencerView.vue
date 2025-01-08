@@ -52,32 +52,6 @@ function createLayer() {
 
   sequencer.addLayer(steps);
 }
-// function createLayer() {
-//   const steps = [];
-//   const step = getRandomStep();
-
-//   // Different probabilities for different beat positions
-//   const beatProbabilities = [
-//     0.8, // Beat 1: high probability (downbeat)
-//     0.3, // Beat 2
-//     0.5, // Beat 3
-//     0.3, // Beat 4
-//     0.6, // Beat 5
-//     0.3, // Beat 6
-//     0.4, // Beat 7
-//     0.3, // Beat 8
-//   ];
-
-//   for (let i = 0; i < sequencer.stepLength; i++) {
-//     if (Math.random() < beatProbabilities[i]) {
-//       steps.push(step);
-//     } else {
-//       steps.push(null);
-//     }
-//   }
-
-//   sequencer.addLayer(steps);
-// }
 </script>
 
 <template>

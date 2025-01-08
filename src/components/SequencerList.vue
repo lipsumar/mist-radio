@@ -54,7 +54,7 @@ const sequencer = useSequencerStore();
   background-color: rgba(118, 92, 236, 0.2);
 }
 .sequencer-list__step.filled.active {
-  background-color: rgba(118, 92, 236, 0.8);
+  background-color: rgb(110, 34, 251);
 }
 
 /* Delete button, with a big cross */
