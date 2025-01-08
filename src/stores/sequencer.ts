@@ -1,7 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import type { Sample, SampleRegion } from "./samples";
-import { playRegion, playSample } from "@/lib/play";
+import { useSamplesStore, type Sample, type SampleRegion } from "./samples";
 
 export type Layer = {
   id: string;
@@ -17,6 +16,7 @@ export type RegionStep = {
 };
 
 export const useSequencerStore = defineStore("sequencer", () => {
+  const samples = useSamplesStore();
   const playing = ref(false);
   const layers = ref<Layer[]>([]);
   const currentStep = ref(0);
@@ -53,9 +53,9 @@ export const useSequencerStore = defineStore("sequencer", () => {
       .filter((step): step is Exclude<typeof step, null> => step !== null);
     steps.forEach((step) => {
       if (step.type === "sample") {
-        playSample(step.sample.blob);
+        samples.play(step.sample.id);
       } else {
-        playRegion(step.sample.blob, step.region.start, step.region.end);
+        samples.play(step.sample.id, step.region);
       }
     });
   }

@@ -4,7 +4,6 @@ import EmptyState from "@/components/EmptyState.vue";
 import MainSection from "@/components/MainSection.vue";
 import SamplesList from "@/components/SamplesList.vue";
 import AudioRecorder from "@/lib/AudioRecorder";
-import { playSample } from "@/lib/play";
 import { useSamplesStore } from "@/stores/samples";
 import { ref } from "vue";
 import IconUpload from "@/components/icons/IconUpload.vue";

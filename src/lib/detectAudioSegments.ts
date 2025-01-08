@@ -18,6 +18,7 @@ export async function detectAudioSegments(
   const windowSize = Math.floor(audioBuffer.sampleRate * 0.02); // 20ms windows
   const minSegmentDuration = 0.03; // Minimum segment duration in seconds
   const minGapDuration = 0.1; // Minimum gap between segments in seconds
+  const maxSegmentDuration = 0.7; // Maximum segment duration in seconds
 
   // Calculate energy levels for each window and gather statistics
   const energyLevels: number[] = [];
@@ -136,5 +137,10 @@ export async function detectAudioSegments(
     segment.end = Math.min(audioBuffer.duration, segment.end + paddingAfter);
   });
 
-  return mergedSegments;
+  // Filter out segments that are too long
+  const filteredSegments = mergedSegments.filter(
+    (segment) => segment.end - segment.start <= maxSegmentDuration
+  );
+
+  return filteredSegments;
 }

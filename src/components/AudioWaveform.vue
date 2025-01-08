@@ -2,7 +2,7 @@
 import { ref, onMounted, watch, onBeforeUnmount } from "vue";
 
 interface Sample {
-  blob: Blob;
+  audioBuffer: AudioBuffer;
 }
 
 interface AudioVisualizerOptions {
@@ -40,7 +40,7 @@ const observer = ref<ResizeObserver | null>(null);
 
 async function renderAudio(
   targetEl: HTMLElement,
-  blob: Blob,
+  audioBuffer: AudioBuffer,
   options: AudioVisualizerOptions
 ): Promise<HTMLCanvasElement> {
   const canvas = document.createElement("canvas");
@@ -58,11 +58,6 @@ async function renderAudio(
 
   ctx.scale(options.dpr, options.dpr);
 
-  const audioContext = new (window.AudioContext ||
-    (window as any).webkitAudioContext)();
-
-  const arrayBuffer = await blob.arrayBuffer();
-  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
   const rawData = audioBuffer.getChannelData(0);
 
   // Calculate start and end samples based on time
@@ -119,7 +114,7 @@ async function drawWaveform() {
   const dpr = window.devicePixelRatio || 1;
 
   try {
-    await renderAudio(waveformContainer.value, props.sample.blob, {
+    await renderAudio(waveformContainer.value, props.sample.audioBuffer, {
       width: waveformContainer.value.clientWidth,
       height: props.height,
       backgroundColor: props.backgroundColor,

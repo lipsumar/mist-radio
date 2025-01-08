@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { Sample } from "@/stores/samples";
+import { useSamplesStore, type Sample } from "@/stores/samples";
 import AudioWaveform from "./AudioWaveform.vue";
-import { playRegion } from "@/lib/play";
 import SoundContainer from "./SoundContainer.vue";
+
+const samples = useSamplesStore();
 
 const props = defineProps<{
   sample: Sample;
@@ -24,7 +25,7 @@ const props = defineProps<{
           :height="50"
           :start-time="region.start"
           :stop-time="region.end"
-          @click="() => playRegion(sample.blob, region.start, region.end)"
+          @click="() => samples.play(sample.id, region)"
         />
       </SoundContainer>
     </div>
